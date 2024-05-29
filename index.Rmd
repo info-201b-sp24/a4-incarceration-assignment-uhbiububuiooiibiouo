@@ -3,69 +3,72 @@ title: "A3: Incarceration"
 output: html_document
 ---
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE, include=FALSE}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(usmap)
+
+url <- "https://raw.githubusercontent.com/melaniewalsh/Neat-Datasets/main/us-prison-pop.csv"
+data <- read_csv(url)
+```
+
 ### Introduction
 
-An introduction of the problem domain and a description of the variable(s) you are choosing to analyze (and why!)
+The issue of mass incarceration in the United States poses significant social and policy challenges. This analysis examines key variables to understand trends and disparities in prison populations. I focus on the total prison population over time in Washington State's top counties, gender disparities in incarceration rates in the top nine states, and the geographical distribution of prison populations across all states. These variables reveal important patterns, such as regional and gender-based disparities, helping inform policies aimed at reducing incarceration rates and addressing underlying causes. Our goal is to provide insights that contribute to more effective and equitable criminal justice policies.
 
 ### Summary Information
 
-Write a summary paragraph of findings that includes the 5 values calculated from your summary information R script
-
-These will likely be calculated using your DPLYR skills, answering questions such as: 
-
-- What is the average value of my variable across all the counties (in the current year)?
-- Where is my variable the highest / lowest?
-- How much has my variable change over the last N years?
-
-Feel free to calculate and report values that you find relevant. Again, remember that the purpose is to think about how these measure of incarceration vary by race.
+In the summary, at first, I am trying to calculate the average total prison population across the US from 1970 to 2018, and which is 361. Secondly, I would like to figure out what is the county with the highest total prison population through all time, which is Los Angeles County in 2007 with 58068 prison population. Thirdly, the lowest prison population county is Alpine County in 1983. Fourth, the county with the highest black prison population is New York County in 1998 with population 24818. Last, the county with the highest male prison population is Los Angeles County in 2007 with male prison population 54365.
 
 ### The Dataset
 
-Who collected the data?  
-How was the data collected or generated?  
-Why was the data collected?  
-How many observations (rows) are in your data?  
-How many features (columns) are in the data?  
-What, if any, ethical questions or questions of power do you need to consider when working with this data?  
-What are possible limitations or problems with this data?   (at least 200 words)
+Who collected the data? 
+Vera Institute of Justice.
 
+How was the data collected or generated?
+The data was collected through the Census of Jails, the Annual Survey of Jails, and the National Corrections Reporting Program, through surveys and records.
+
+Why was the data collected?  
+The US prison population data was collected to provide an understanding of incarceration trends across the country. The goals were to analyze the growth and disparities in jail and prison populations, inform public policy, and guide reforms in the justice system.
+
+How many observations (rows) are in your data? 
+```{r}
+num_rows <- nrow(data)
+print(num_rows)
+```
+
+How many features (columns) are in the data? 
+```{r}
+num_columns <- ncol(data)
+print(num_columns)
+```
+
+What, if any, ethical questions or questions of power do you need to consider when working with this data?  
+Ethical considerations include privacy and confidentiality, addressing potential biases and injustices. We need to consider all variables including regions and races fairly through processing.
+
+What are possible limitations or problems with this data?   (at least 200 words)
+The US prison population data has several limitations and potential problems. Firstly, the accuracy and completeness of the data can be compromised due to reporting errors or inconsistencies across different sources. Not all jurisdictions may report data uniformly, leading to gaps and discrepancies that can affect the reliability of the analysis. Additionally, the dataset may reflect systemic biases inherent in the justice system, such as racial disparities, which could influence the interpretation of the data. The integration of multiple sources, like the Census of Jails, the Annual Survey of Jails, and the National Corrections Reporting Program, while comprehensive, may also introduce challenges in standardizing and reconciling data from different methodologies and definitions. Furthermore, there may be ethical concerns regarding the use of data without informed consent from the individuals represented, raising questions about privacy and confidentiality. Researchers must be mindful of these limitations and strive for transparency and accountability in their work, ensuring that their findings are used to promote justice and equity rather than perpetuate harm. Addressing these limitations requires critical analysis, rigorous data validation, and a commitment to ethical standards.
 
 ### Trends Over Time Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+My first chart is a plot of the total prison population trends over time for the top nine counties in Washington State. This chart helps me analyze the effect of my target variable , counties, on the prison population. According to the plot, I can conclude that the prison population of most counties in Washington remained at a low level, except Pierce and King, and the King county's total prison population remained at the highest level during 1970-2018. Over time, all counties have followed a similar trend, with prison populations rising gradually beginning in 1970 and then declining since about 2010.
 
-The first chart that you will create and include will show the trend over time of your variable/topic. Think carefully about what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- Show more than one, but fewer than ~10 trends
-  - This may mean showing the same measure for different locations or different racial groups. Think carefully about a meaningful comparison of locations (e.g., the top 10 counties in a state, top 10 states, etc.)
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- You need a legend for your different line colors and a clear legend title
-
-When we say "clear" or "human readable" titles and labels, that means that you should not just display the variable name.
-
-Here's an example of how to run an R script inside an RMarkdown file:
-
-``````{r, echo = FALSE, code = readLines("chart1_example.R")}
+```{r, echo = FALSE, code = readLines("chart1.R")}
 ```
 
 ### Variable Comparison Chart
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+My second chart is a comparison of the female and male prison populations across the top nine states. This chart helps me analyze the gender disparities in incarceration within these states. According to the plot, I can conclude that the male prison population is significantly higher than the female prison population in all top states. California and Texas have the highest total prison populations, with a substantial difference between male and female inmates. This pattern is consistent across other states. The chart highlights the stark contrast in incarceration rates between genders.
 
-The second chart that you will create and include will show how two different (continuous) variables are related to one another. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
-
-- You must have clear x and y axis labels
-- The chart needs a clear title 
-- If you choose to add a color encoding (not required), you need a legend for your different color and a clear legend title
+```{r, echo = FALSE, code = readLines("chart2.R")}
+```
 
 ### Map
 
-Include a chart. Make sure to describe why you included the chart, and what patterns emerged
+The third chart illustrates the geographical distribution of the total prison population across the United States. This map helps visualize regional disparities in incarceration rates. According to the plot, states like California, Texas, and Florida have the highest total prison populations. The darker shades indicate higher populations, while lighter shades show lower populations. This geographical distribution highlights significant regional differences, suggesting where resources and policy interventions may be most needed to address incarceration issues.
 
-The last chart that you will create and include will show how a variable is distributed geographically. Again, think carefully about what such a comparison means and what you want to communicate to your user (you may have to find relevant trends in the dataset first!). Here are some requirements to help guide your design:
+```{r, echo = FALSE, code = readLines("map.R")}
+```
 
-- Your map needs a title
-- Your color scale needs a legend with a clear label
-- Use a map based coordinate system to set the aspect ratio of your map
 
